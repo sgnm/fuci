@@ -18,6 +18,7 @@
         </activity>
         <activity android:name=".ConnectProcessing" />
         <activity android:name=".GameMenu" />
+        <activity android:name=".DartsView" />
     </application>
 
 </manifest>
