@@ -10,14 +10,15 @@
         android:id="@+id/MenuBg"
         android:src="@drawable/menu"
         android:adjustViewBounds="true"
-        android:scaleType="fitXY" />
+        />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/MenuPlay"
         android:src="@drawable/menu_play_game"
-        android:adjustViewBounds="true" />
+        android:adjustViewBounds="true"
+        android:layout_marginTop="60dp" />
 
     <ImageView
         android:layout_width="156dp"
@@ -26,7 +27,7 @@
         android:src="@drawable/menu_favorite"
         android:adjustViewBounds="false"
         android:layout_gravity="left|bottom"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="64dp"
         android:layout_marginLeft="24dp" />
 
 

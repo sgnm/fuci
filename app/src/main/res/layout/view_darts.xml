@@ -6,6 +6,178 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/mode_darts"
-        />
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="000"
+        android:id="@+id/sum1"
+        android:layout_marginEnd="42dp"
+        android:layout_marginTop="104dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="#fff"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="plus"
+        android:id="@+id/btn"
+        android:layout_marginBottom="159dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="000"
+        android:id="@+id/score1"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/sum1"
+        android:layout_alignEnd="@+id/sum1"
+        android:textColor="#fff"
+        android:gravity="right" />
+
+    <TextView
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="000"
+        android:id="@+id/score2"
+        android:layout_below="@+id/score1"
+        android:layout_alignStart="@+id/score1"
+        android:textColor="#fff"
+        android:gravity="right" />
+
+    <TextView
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="000"
+        android:id="@+id/score3"
+        android:layout_below="@+id/score2"
+        android:layout_alignStart="@+id/score2"
+        android:textColor="#fff"
+        android:gravity="right" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="first"
+        android:id="@+id/first1"
+        android:layout_alignTop="@+id/score1"
+        android:layout_toEndOf="@+id/btn"
+        android:textColor="#fff"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="second"
+        android:id="@+id/second1"
+        android:layout_below="@+id/first1"
+        android:layout_alignStart="@+id/first1"
+        android:textColor="#fff"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="third"
+        android:id="@+id/third1"
+        android:layout_below="@+id/second1"
+        android:layout_alignStart="@+id/second1"
+        android:textColor="#fff"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="000"
+        android:id="@+id/sum2"
+        android:layout_marginTop="20dp"
+        android:textColor="#fff"
+        android:layout_below="@+id/score3"
+        android:layout_alignStart="@+id/sum1" />
+
+    <TextView
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="000"
+        android:id="@+id/score4"
+        android:layout_marginTop="12dp"
+        android:textColor="#fff"
+        android:gravity="right"
+        android:layout_below="@+id/sum2"
+        android:layout_alignStart="@+id/score3" />
+
+    <TextView
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="000"
+        android:id="@+id/score5"
+        android:textColor="#fff"
+        android:gravity="right"
+        android:layout_below="@+id/score4"
+        android:layout_alignStart="@+id/score4" />
+
+    <TextView
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="000"
+        android:id="@+id/score6"
+        android:textColor="#fff"
+        android:gravity="right"
+        android:layout_below="@+id/score5"
+        android:layout_alignStart="@+id/score5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="first"
+        android:id="@+id/first2"
+        android:textColor="#fff"
+        android:layout_above="@+id/score5"
+        android:layout_toEndOf="@+id/btn" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="second"
+        android:id="@+id/second2"
+        android:textColor="#fff"
+        android:layout_below="@+id/first2"
+        android:layout_alignStart="@+id/first2" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="next"
+        android:id="@+id/btnChange"
+        android:layout_marginStart="25dp"
+        android:layout_alignBottom="@+id/score6"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="third"
+        android:id="@+id/third2"
+        android:textColor="#fff"
+        android:layout_alignTop="@+id/score6"
+        android:layout_toEndOf="@+id/btn" />
 
 </RelativeLayout>

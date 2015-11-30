@@ -17,11 +17,21 @@ public class GameMenu extends Activity implements View.OnClickListener {
 
         ImageView imgDarts = (ImageView)findViewById(R.id.Darts);
         imgDarts.setOnClickListener(this);
+        ImageView imgDrums = (ImageView)findViewById(R.id.Drums);
+        imgDrums.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(this, DartsView.class);
-        startActivity(intent);
+        switch (view.getId()){
+            case R.id.Drums:
+                Intent intentDrums = new Intent(this, DrumsView.class);
+                startActivity(intentDrums);
+                break;
+            case R.id.Darts:
+                Intent intentDarts = new Intent(this, DartsView.class);
+                startActivity(intentDarts);
+                break;
+        }
     }
 }

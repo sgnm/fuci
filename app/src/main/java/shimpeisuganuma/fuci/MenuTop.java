@@ -21,7 +21,7 @@ public class MenuTop extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(MenuTop.this, ConnectProcessing.class);
+        Intent intent = new Intent(MenuTop.this, GameMenu.class);
         startActivity(intent);
     }
 }
