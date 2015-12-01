@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:text="New Button"
         android:id="@+id/bass"
-        android:layout_marginTop="102dp"
+        android:layout_marginTop="120dp"
         android:layout_below="@+id/snare"
         android:layout_alignStart="@+id/snare" />
 
