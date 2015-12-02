@@ -2,13 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="shimpeisuganuma.fuci" >
 
+    <!--Bluetoothによる通信を許可する-->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <!--Bluetoothの設定変更を許可する-->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".ConnectProcessing"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,6 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ConnectProcessing" />
         <activity android:name=".MenuTop" />
         <activity android:name=".GameMenu" />
         <activity android:name=".DartsView" />
