@@ -1,19 +1,65 @@
 package shimpeisuganuma.fuci;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.UUID;
+
 /**
  * Created by Shin on 2015/11/27.
  */
 
-public class DartsView extends Activity implements View.OnClickListener {
+public class DartsView extends Activity implements View.OnClickListener, Runnable {
+
+    /* tag */
+    private static final String TAG = "BluetoothSample";
+
+    /* Bluetooth Adapter */
+    private BluetoothAdapter mAdapter;
+
+    /* Bluetoothデバイス */
+    private BluetoothDevice mDevice;
+
+    /* Bluetooth UUID(固定) */
+    private final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+
+    /* デバイス名 環境に合わせて変更*/
+    private final String DEVICE_NAME = "HC-06";
+
+    /* Soket */
+    private BluetoothSocket mSocket;
+
+    /* Thread */
+    private Thread mThread;
+
+    /* Threadの状態を表す */
+    private boolean isRunning;
+
+    /** Action(ステータス表示). */
+    private static final int VIEW_STATUS = 0;
+
+    /** Action(取得文字列). */
+    private static final int VIEW_INPUT = 1;
+
+    /** Connect確認用フラグ */
+    private boolean connectFlg = false;
+
+    /** BluetoothのOutputStream. */
+    OutputStream mmOutputStream = null;
 
     int i = 0;
     int s1, s2, s3, s4, s5, s6;
@@ -150,6 +196,97 @@ public class DartsView extends Activity implements View.OnClickListener {
             return true;
         } else {
             return false;
+        }
+    }
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            int action = msg.what;
+            String msgStr = (String)msg.obj;
+            if(action == VIEW_INPUT){
+//                mInputTextView.setText(msgStr);
+                Log.d("BLE", "input value: " + msgStr);
+            }
+            else if(action == VIEW_STATUS){
+//                mStatusTextView.setText(msgStr);
+                Log.d("BLE", "status: " + msgStr);
+            }
+        }
+    };
+
+    @Override
+    public void run() {
+        InputStream mmInStream = null;
+
+        Message valueMsg = new Message();
+        valueMsg.what = VIEW_STATUS;
+        valueMsg.obj = "connecting...";
+        mHandler.sendMessage(valueMsg);
+
+        try{
+
+            // 取得したデバイス名を使ってBluetoothでSocket接続
+            mSocket = mDevice.createRfcommSocketToServiceRecord(MY_UUID);
+            mSocket.connect();
+            mmInStream = mSocket.getInputStream();
+            mmOutputStream = mSocket.getOutputStream();
+
+            // InputStreamのバッファを格納
+            byte[] buffer = new byte[1024];
+
+            // 取得したバッファのサイズを格納
+            int bytes;
+            valueMsg = new Message();
+            valueMsg.what = VIEW_STATUS;
+            valueMsg.obj = "connected.";
+            mHandler.sendMessage(valueMsg);
+
+            // 接続成功時のKEYをMenuTopにintent送信
+//            intent = new Intent(ConnectProcessing.this, MenuTop.class);
+//            intent.putExtra("success", "接続に成功しました");
+//            startActivity(intent);
+
+            connectFlg = true;
+
+            while(isRunning){
+
+                // InputStreamの読み込み
+                bytes = mmInStream.read(buffer);
+                Log.i(TAG,"bytes="+bytes);
+                // String型に変換
+                String readMsg = new String(buffer, 0, bytes);
+
+                // null以外なら表示
+                if(readMsg.trim() != null && !readMsg.trim().equals("")){
+                    Log.i(TAG,"value="+readMsg.trim());
+
+                    valueMsg = new Message();
+                    valueMsg.what = VIEW_INPUT;
+                    valueMsg.obj = readMsg;
+                    mHandler.sendMessage(valueMsg);
+                }
+            }
+        }
+        // エラー処理
+        catch(Exception e){
+
+            valueMsg = new Message();
+            valueMsg.what = VIEW_STATUS;
+            valueMsg.obj = "Error1:" + e;
+            mHandler.sendMessage(valueMsg);
+            Log.d("BLE", "接続に失敗しました");
+
+            //接続失敗時のKEYをMenuTopにintent送信
+//            intent = new Intent(ConnectProcessing.this, MenuTop.class);
+//            intent.putExtra("error", "接続に失敗しました");
+//            startActivity(intent);
+
+            try{
+                mSocket.close();
+            }catch(Exception ee){}
+            isRunning = false;
+            connectFlg = false;
         }
     }
 }

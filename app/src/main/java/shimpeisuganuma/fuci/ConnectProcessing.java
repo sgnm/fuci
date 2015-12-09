@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -62,6 +63,8 @@ public class ConnectProcessing extends Activity implements Runnable {
 
     /** BluetoothのOutputStream. */
     OutputStream mmOutputStream = null;
+
+    Intent intent;
 
 
     @Override
@@ -132,6 +135,11 @@ public class ConnectProcessing extends Activity implements Runnable {
             valueMsg.obj = "connected.";
             mHandler.sendMessage(valueMsg);
 
+            // 接続成功時のKEYをMenuTopにintent送信
+            intent = new Intent(ConnectProcessing.this, MenuTop.class);
+            intent.putExtra("success", "接続に成功しました");
+            startActivity(intent);
+
             connectFlg = true;
 
             while(isRunning){
@@ -160,6 +168,12 @@ public class ConnectProcessing extends Activity implements Runnable {
             valueMsg.what = VIEW_STATUS;
             valueMsg.obj = "Error1:" + e;
             mHandler.sendMessage(valueMsg);
+            Log.d("BLE", "接続に失敗しました");
+
+            //接続失敗時のKEYをMenuTopにintent送信
+            intent = new Intent(ConnectProcessing.this, MenuTop.class);
+            intent.putExtra("error", "接続に失敗しました");
+            startActivity(intent);
 
             try{
                 mSocket.close();
