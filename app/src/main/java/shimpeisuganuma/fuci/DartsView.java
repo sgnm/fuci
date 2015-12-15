@@ -71,6 +71,9 @@ public class DartsView extends Activity implements View.OnClickListener, Runnabl
     TextView strSum1; TextView strSum2;
     TextView score1; TextView score2; TextView score3; TextView score4; TextView score5; TextView score6;
 
+    String str1 = ""; String str2 = "";
+    String str = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -308,9 +311,22 @@ public class DartsView extends Activity implements View.OnClickListener, Runnabl
         public void handleMessage(Message msg) {
             int action = msg.what;
             String msgStr = (String)msg.obj;
+            
             if(action == VIEW_INPUT){
 //                mInputTextView.setText(msgStr);
-                Log.d("BLE", "input value: " + msgStr);
+
+                if (msgStr.length() == 1){
+                    str1 = msgStr;
+                    str += str1;
+                }else if (msgStr.length() == 2){
+                    str2 = msgStr;
+                    str += str2;
+                }
+
+                if (str.length() > 2) {
+                    Log.d("BLE", "input value: " + str);
+                    str = "";
+                }
             }
             else if(action == VIEW_STATUS){
 //                mStatusTextView.setText(msgStr);
