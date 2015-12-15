@@ -28,7 +28,8 @@
         android:id="@+id/btn"
         android:layout_marginBottom="159dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible" />
 
     <TextView
         android:layout_width="24dp"
@@ -175,8 +176,7 @@
         android:layout_height="wrap_content"
         android:text="reset"
         android:id="@+id/btnReset"
-        android:layout_marginBottom="73dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignTop="@+id/btn"
+        android:layout_alignStart="@+id/btn" />
 
 </RelativeLayout>

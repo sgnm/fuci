@@ -38,7 +38,7 @@ public class MenuTop extends Activity implements View.OnClickListener {
         String error = i.getStringExtra("error");
         String success = i.getStringExtra("success");
         if (error != null){
-            Toast.makeText(this, "アプリを再起動し、もう一度接続して下さい", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "もう一度接続して下さい", Toast.LENGTH_SHORT).show();
         }
         if (success != null){
             Toast.makeText(this, "Bluetoothは接続されています", Toast.LENGTH_SHORT).show();

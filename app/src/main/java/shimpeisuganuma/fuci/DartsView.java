@@ -74,6 +74,10 @@ public class DartsView extends Activity implements View.OnClickListener, Runnabl
     String str1 = ""; String str2 = "";
     String str = "";
 
+    int n;
+
+    Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -131,7 +135,7 @@ public class DartsView extends Activity implements View.OnClickListener, Runnabl
     }
 
     public void setScore(int player){
-        int n = (int) (Math.random() * 10) + 1;
+//        int n = (int) (Math.random() * 10) + 1;
         switch (player){
             case 0:
                 switch (i %= 3) {
@@ -189,6 +193,7 @@ public class DartsView extends Activity implements View.OnClickListener, Runnabl
         s1 = 0; s2 = 0; s3 = 0; s4 = 0; s5 = 0; s6 = 0; sum1 = 0; sum2 = 0;
         score1.setText("0"); score2.setText("0"); score3.setText("0"); score4.setText("0"); score5.setText("0"); score6.setText("0");
         strSum1.setText("0"); strSum2.setText("0");
+        i = 0;
     }
 
     public void dispPlayer(int player){
@@ -265,6 +270,10 @@ public class DartsView extends Activity implements View.OnClickListener, Runnabl
             valueMsg.obj = "connected.";
             mHandler.sendMessage(valueMsg);
 
+//            intent = new Intent(DartsView.this, DartsView.class);
+//            intent.putExtra("success", "接続に成功しました");
+//            startActivity(intent);
+
             connectFlg = true;
 
             while(isRunning){
@@ -295,6 +304,10 @@ public class DartsView extends Activity implements View.OnClickListener, Runnabl
             mHandler.sendMessage(valueMsg);
             Log.d("BLE", "接続に失敗しました");
 
+            intent = new Intent(DartsView.this, MenuTop.class);
+            intent.putExtra("error", "接続に失敗しました");
+            startActivity(intent);
+
             try{
                 mSocket.close();
             }catch(Exception ee){}
@@ -311,7 +324,7 @@ public class DartsView extends Activity implements View.OnClickListener, Runnabl
         public void handleMessage(Message msg) {
             int action = msg.what;
             String msgStr = (String)msg.obj;
-            
+
             if(action == VIEW_INPUT){
 //                mInputTextView.setText(msgStr);
 
@@ -325,6 +338,10 @@ public class DartsView extends Activity implements View.OnClickListener, Runnabl
 
                 if (str.length() > 2) {
                     Log.d("BLE", "input value: " + str);
+                    str = str.substring(0, str.length() - 1);
+                    n = Integer.parseInt(str);
+                    setScore(player);
+                    i++;
                     str = "";
                 }
             }

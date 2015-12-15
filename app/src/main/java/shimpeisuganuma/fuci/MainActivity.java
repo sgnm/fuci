@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
         if(btEnable == true){
             //BluetoothがONだった場合の処理
             Log.d("BLE", "BLEはONです");
-            Intent intent = new Intent(MainActivity.this, ConnectProcessing.class);
+            Intent intent = new Intent(MainActivity.this, MenuTop.class);
             startActivity(intent);
         }else{
             //OFFだった場合、ONにすることを促すダイアログを表示する画面に遷移
@@ -54,7 +54,7 @@ public class MainActivity extends Activity {
             if(ResultCode == Activity.RESULT_OK){
                 //BluetoothがONにされた場合の処理
                 Log.d("BLE", "BluetoothをONにしてもらえました。");
-                Intent intent = new Intent(MainActivity.this, ConnectProcessing.class);
+                Intent intent = new Intent(MainActivity.this, MenuTop.class);
                 startActivity(intent);
             }else{
                 Log.d("BLE", "BluetoothがONにしてもらえませんでした。");

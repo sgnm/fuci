@@ -17,7 +17,8 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="100dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:visibility="invisible" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -27,7 +28,8 @@
         android:id="@+id/snare"
         android:layout_marginStart="34dp"
         android:layout_alignTop="@+id/hat"
-        android:layout_toEndOf="@+id/hat" />
+        android:layout_toEndOf="@+id/hat"
+        android:visibility="invisible" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -37,7 +39,8 @@
         android:id="@+id/bass"
         android:layout_marginTop="120dp"
         android:layout_below="@+id/snare"
-        android:layout_alignStart="@+id/snare" />
+        android:layout_alignStart="@+id/snare"
+        android:visibility="invisible" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -47,6 +50,7 @@
         android:id="@+id/clap"
         android:layout_alignBaseline="@+id/bass"
         android:layout_alignBottom="@+id/bass"
-        android:layout_alignStart="@+id/hat" />
+        android:layout_alignStart="@+id/hat"
+        android:visibility="invisible" />
 
 </RelativeLayout>
