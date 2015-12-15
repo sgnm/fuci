@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -90,6 +91,26 @@ public class DartsView extends Activity implements View.OnClickListener, Runnabl
         score4 = (TextView) findViewById(R.id.score4);
         score5 = (TextView) findViewById(R.id.score5);
         score6 = (TextView) findViewById(R.id.score6);
+
+        // Bluetoothのデバイス名を取得
+        // デバイス名は、RNBT-XXXXになるため、
+        // DVICE_NAMEでデバイス名を定義
+        mAdapter = BluetoothAdapter.getDefaultAdapter();
+//        mStatusTextView.setText("SearchDevice");
+        Set< BluetoothDevice > devices = mAdapter.getBondedDevices();
+        for ( BluetoothDevice device : devices){
+
+            if(device.getName().equals(DEVICE_NAME)){
+//                mStatusTextView.setText("find: " + device.getName());
+                Log.d("BLE", "find: " + device.getName());
+                mDevice = device;
+            }
+        }
+
+        mThread = new Thread(this);
+        // Threadを起動し、Bluetooth接続
+        isRunning = true;
+        mThread.start();
     }
 
 
@@ -199,22 +220,21 @@ public class DartsView extends Activity implements View.OnClickListener, Runnabl
         }
     }
 
-    Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            int action = msg.what;
-            String msgStr = (String)msg.obj;
-            if(action == VIEW_INPUT){
-//                mInputTextView.setText(msgStr);
-                Log.d("BLE", "input value: " + msgStr);
-            }
-            else if(action == VIEW_STATUS){
-//                mStatusTextView.setText(msgStr);
-                Log.d("BLE", "status: " + msgStr);
-            }
-        }
-    };
 
+    @Override
+    protected void onPause(){
+        super.onPause();
+
+        isRunning = false;
+        connectFlg = false;
+
+        try{
+            mSocket.close();
+        }
+        catch(Exception e){}
+    }
+
+    // スレッド処理(connectボタン押下後に実行)
     @Override
     public void run() {
         InputStream mmInStream = null;
@@ -241,11 +261,6 @@ public class DartsView extends Activity implements View.OnClickListener, Runnabl
             valueMsg.what = VIEW_STATUS;
             valueMsg.obj = "connected.";
             mHandler.sendMessage(valueMsg);
-
-            // 接続成功時のKEYをMenuTopにintent送信
-//            intent = new Intent(ConnectProcessing.this, MenuTop.class);
-//            intent.putExtra("success", "接続に成功しました");
-//            startActivity(intent);
 
             connectFlg = true;
 
@@ -277,11 +292,6 @@ public class DartsView extends Activity implements View.OnClickListener, Runnabl
             mHandler.sendMessage(valueMsg);
             Log.d("BLE", "接続に失敗しました");
 
-            //接続失敗時のKEYをMenuTopにintent送信
-//            intent = new Intent(ConnectProcessing.this, MenuTop.class);
-//            intent.putExtra("error", "接続に失敗しました");
-//            startActivity(intent);
-
             try{
                 mSocket.close();
             }catch(Exception ee){}
@@ -289,4 +299,25 @@ public class DartsView extends Activity implements View.OnClickListener, Runnabl
             connectFlg = false;
         }
     }
+
+    /**
+     * 描画処理はHandlerでおこなう
+     */
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            int action = msg.what;
+            String msgStr = (String)msg.obj;
+            if(action == VIEW_INPUT){
+//                mInputTextView.setText(msgStr);
+                Log.d("BLE", "input value: " + msgStr);
+            }
+            else if(action == VIEW_STATUS){
+//                mStatusTextView.setText(msgStr);
+                Log.d("BLE", "status: " + msgStr);
+            }
+        }
+    };
+
+
 }
