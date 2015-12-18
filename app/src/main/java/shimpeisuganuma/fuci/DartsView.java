@@ -6,6 +6,8 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -78,6 +80,9 @@ public class DartsView extends Activity implements View.OnClickListener, Runnabl
 
     Intent intent;
 
+    private SoundPool mSoundPool;
+    private int mSoundId[];
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -118,6 +123,11 @@ public class DartsView extends Activity implements View.OnClickListener, Runnabl
         // Threadを起動し、Bluetooth接続
         isRunning = true;
         mThread.start();
+
+        mSoundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+        mSoundId = new int[2];
+        mSoundId[0] = mSoundPool.load(getApplicationContext(), R.raw.pipo, 0);
+        mSoundId[1] = mSoundPool.load(getApplicationContext(), R.raw.gun, 0);
     }
 
 
@@ -136,6 +146,12 @@ public class DartsView extends Activity implements View.OnClickListener, Runnabl
 
     public void setScore(int player){
 //        int n = (int) (Math.random() * 10) + 1;
+        if (n == 50) {
+            mSoundPool.play(mSoundId[1], 1.0F, 1.0F, 0, 0, 1.0F);
+        }else {
+            mSoundPool.play(mSoundId[0], 1.0F, 1.0F, 0, 0, 1.0F);
+        }
+
         switch (player){
             case 0:
                 switch (i %= 3) {
@@ -228,10 +244,20 @@ public class DartsView extends Activity implements View.OnClickListener, Runnabl
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSoundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+        mSoundId = new int[2];
+        mSoundId[0] = mSoundPool.load(getApplicationContext(), R.raw.pipo, 0);
+        mSoundId[1] = mSoundPool.load(getApplicationContext(), R.raw.gun, 0);
+    }
 
     @Override
     protected void onPause(){
         super.onPause();
+
+        mSoundPool.release();
 
         isRunning = false;
         connectFlg = false;
